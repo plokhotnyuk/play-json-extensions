@@ -20,7 +20,7 @@ object Adt {
   sealed trait SomeAdt
   case object ChoiceA extends SomeAdt
   case object ChoiceB extends SomeAdt
-  case object `Choice.C` extends SomeAdt
+  case object ChoiceC extends SomeAdt
   final case class X( i: Int, s: String ) extends SomeAdt
   object X {
     implicit def jsonFormat = Jsonx.formatCaseClass[X]
@@ -176,20 +176,20 @@ class PlayJsonExtensionsTest extends AnyFunSuite {
     implicit val jsonFormat = Jsonx.formatSealed[SomeAdt]
     val a: SomeAdt = ChoiceA
     val b: SomeAdt = ChoiceB
-    val c: SomeAdt = `Choice.C`
+    val c: SomeAdt = ChoiceC
     val x = X( 99, "Chris" )
     val y = Y( 99, "Chris" )
     assert( "ChoiceA" === Json.toJson( ChoiceA ).as[JsString].value )
     assert( "ChoiceB" === Json.toJson( ChoiceB ).as[JsString].value )
-    assert( "Choice.C" === Json.toJson( `Choice.C` ).as[JsString].value )
+    assert( "ChoiceC" === Json.toJson( ChoiceC ).as[JsString].value )
     assert( "ChoiceA" === Json.toJson( a ).as[JsString].value )
     assert( "ChoiceB" === Json.toJson( b ).as[JsString].value )
-    assert( "Choice.C" === Json.toJson( c ).as[JsString].value )
+    assert( "ChoiceC" === Json.toJson( c ).as[JsString].value )
 
     assert( x !== y )
     assert( ChoiceA === Json.fromJson[SomeAdt]( Json.toJson( ChoiceA ) ).get )
     assert( ChoiceB === Json.fromJson[SomeAdt]( Json.toJson( ChoiceB ) ).get )
-    assert( `Choice.C` === Json.fromJson[SomeAdt]( Json.toJson( `Choice.C` ) ).get )
+    assert( ChoiceC === Json.fromJson[SomeAdt]( Json.toJson( ChoiceC ) ).get )
 
     /* disabling tests for ambiguity, not supported at the moment
     assert(x === Json.fromJson[SomeAdt](Json.toJson[SomeAdt](x)).get)

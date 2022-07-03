@@ -3,7 +3,6 @@ val sharedSettings = Seq(
   name := "play-json-extensions",
   scalaVersion := "2.12.10",
   crossScalaVersions := Seq("2.12.10", "2.13.1"),
-  credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credential"),
   description := "Additional type classes for the play-json serialization library",
   organizationHomepage := Some(url("https://github.com/plokhotnyuk")),
   homepage := Some(url("https://github.com/plokhotnyuk/play-json-extensions")),
@@ -38,7 +37,7 @@ val sharedSettings = Seq(
   )
 )
 
-lazy val root = Project("play-json-extensions", file("."))
+lazy val root = Project("play-json-extensions-root", file("."))
   .aggregate(`play-json-extensions`.js, `play-json-extensions`.jvm)
   .settings(sharedSettings)
   .settings(publish / skip := true)
